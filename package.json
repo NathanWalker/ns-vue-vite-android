@@ -5,14 +5,27 @@
   "private": true,
   "dependencies": {
     "@nativescript/core": "~9.0.0",
+    "@valor/nativescript-websockets": "^2.0.2",
     "nativescript-vue": "^3.0.0"
   },
   "devDependencies": {
+    "@nativescript/android": "9.0.2",
     "@nativescript/tailwind": "^4.0.0",
     "@nativescript/types": "~9.0.0",
+    "@nativescript/vite": "^2.0.3",
     "@nativescript/webpack": "~5.0.31",
     "@types/node": "^20.0.0",
+    "concurrently": "^9.0.0",
     "tailwindcss": "^4.0.0",
-    "typescript": "~5.8.0"
+    "typescript": "~5.8.0",
+    "wait-on": "^9.0.0"
+  },
+  "scripts": {
+    "dev:ios": "concurrently -k -n vite,ns \"npm run dev:server:ios\" \"wait-on tcp:5173 && npm run ios\"",
+    "dev:android": "concurrently -k -n vite,ns \"npm run dev:server:android\" \"wait-on tcp:5173 && npm run android\"",
+    "dev:server:ios": "vite serve -- --env.ios --env.hmr",
+    "dev:server:android": "vite serve -- --env.android --env.hmr",
+    "ios": "ns debug ios",
+    "android": "ns debug android"
   }
 }
